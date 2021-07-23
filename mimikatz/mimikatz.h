@@ -1,5 +1,5 @@
 /*	Benjamin DELPY `gentilkiwi`
-	http://blog.gentilkiwi.com
+	https://blog.gentilkiwi.com
 	benjamin@gentilkiwi.com
 	Licence : https://creativecommons.org/licenses/by/4.0/
 */
@@ -10,6 +10,7 @@
 #include "modules/kuhl_m_crypto.h"
 #include "modules/sekurlsa/kuhl_m_sekurlsa.h"
 #include "modules/kerberos/kuhl_m_kerberos.h"
+#include "modules/ngc/kuhl_m_ngc.h"
 #include "modules/kuhl_m_process.h"
 #include "modules/kuhl_m_service.h"
 #include "modules/kuhl_m_privilege.h"
@@ -43,7 +44,7 @@ extern VOID WINAPI RtlGetNtVersionNumbers(LPDWORD pMajor, LPDWORD pMinor, LPDWOR
 
 int wmain(int argc, wchar_t * argv[]);
 void mimikatz_begin();
-void mimikatz_end();
+void mimikatz_end(NTSTATUS status);
 
 BOOL WINAPI HandlerRoutine(DWORD dwCtrlType);
 
@@ -55,7 +56,6 @@ NTSTATUS mimikatz_dispatchCommand(wchar_t * input);
 #if defined(_POWERKATZ)
 __declspec(dllexport) wchar_t * powershell_reflective_mimikatz(LPCWSTR input);
 #elif defined(_WINDLL)
-void reatachIoHandle(DWORD nStdHandle, int flags, const char *Mode, FILE *file);
 void CALLBACK mimikatz_dll(HWND hwnd, HINSTANCE hinst, LPWSTR lpszCmdLine, int nCmdShow);
 #if defined(_M_X64) || defined(_M_ARM64)
 #pragma comment(linker, "/export:mainW=mimikatz_dll")
